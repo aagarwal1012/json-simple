@@ -4,6 +4,8 @@
  */
 package org.json.simple.parser;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
+
 /**
  * @author FangYidong<fangyidong@yahoo.com.cn>
  */
@@ -18,7 +20,7 @@ public class Yytoken {
 	public static final int TYPE_EOF=-1;//end of file
 	
 	public int type=0;
-	public Object value=null;
+	public @Nullable Object value=null;
 	
 	public Yytoken(int type,Object value){
 		this.type=type;

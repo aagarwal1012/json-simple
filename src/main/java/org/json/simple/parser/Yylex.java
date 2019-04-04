@@ -2,6 +2,8 @@
 
 package org.json.simple.parser;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
+
 class Yylex {
 
   /** This character denotes the end of file */
@@ -498,7 +500,7 @@ int getPosition(){
    * @return      the next token
    * @exception   java.io.IOException  if any I/O-Error occurs
    */
-  public Yytoken yylex() throws java.io.IOException, ParseException {
+  public @Nullable Yytoken yylex() throws java.io.IOException, ParseException {
     int zzInput;
     int zzAction;
 
