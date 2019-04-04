@@ -22,7 +22,7 @@ public class Yytoken {
 	public int type=0;
 	public @Nullable Object value=null;
 	
-	public Yytoken(int type,Object value){
+	public Yytoken(int type,@Nullable Object value){
 		this.type=type;
 		this.value=value;
 	}
