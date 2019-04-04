@@ -11,6 +11,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.checkerframework.checker.nullness.qual.KeyFor;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -30,9 +32,9 @@ public class JSONParser {
 	public static final int S_END=6;
 	public static final int S_IN_ERROR=-1;
 	
-	private LinkedList handlerStatusStack;
+	private @Nullable LinkedList handlerStatusStack;
 	private Yylex lexer = new Yylex((Reader)null);
-	private Yytoken token = null;
+	private @Nullable Yytoken token = null;
 	private int status = S_INIT;
 	
 	private int peekStatus(LinkedList statusStack){
@@ -151,7 +153,7 @@ public class JSONParser {
 						break;
 					case Yytoken.TYPE_VALUE:
 						if(token.value instanceof String){
-							String key=(String)token.value;
+							@KeyFor("valueStack") String key=(String)token.value;
 							valueStack.addFirst(key);
 							status=S_PASSED_PAIR_KEY;
 							statusStack.addFirst(new Integer(status));
@@ -182,7 +184,7 @@ public class JSONParser {
 						break;
 					case Yytoken.TYPE_VALUE:
 						statusStack.removeFirst();
-						String key=(String)valueStack.removeFirst();
+						@KeyFor("parent") String key=(String)valueStack.removeFirst();
 						Map parent=(Map)valueStack.getFirst();
 						parent.put(key,token.value);
 						status=peekStatus(statusStack);
@@ -271,31 +273,31 @@ public class JSONParser {
 			token = new Yytoken(Yytoken.TYPE_EOF, null);
 	}
 	
-	private Map createObjectContainer(ContainerFactory containerFactory){
+	private Map createObjectContainer(@Nullable ContainerFactory containerFactory){
 		if(containerFactory == null)
 			return new JSONObject();
-		Map m = containerFactory.createObjectContainer();
+		@Nullable Map m = containerFactory.createObjectContainer();
 		
 		if(m == null)
 			return new JSONObject();
 		return m;
 	}
 	
-	private List createArrayContainer(ContainerFactory containerFactory){
+	private List createArrayContainer(@Nullable ContainerFactory containerFactory){
 		if(containerFactory == null)
 			return new JSONArray();
-		List l = containerFactory.creatArrayContainer();
+		@Nullable List l = containerFactory.creatArrayContainer();
 		
 		if(l == null)
 			return new JSONArray();
 		return l;
 	}
 	
-	public void parse(String s, ContentHandler contentHandler) throws ParseException{
+	public void parse(@Nullable String s, ContentHandler contentHandler) throws ParseException{
 		parse(s, contentHandler, false);
 	}
 	
-	public void parse(String s, ContentHandler contentHandler, boolean isResume) throws ParseException{
+	public void parse(@Nullable String s, ContentHandler contentHandler, boolean isResume) throws ParseException{
 		StringReader in=new StringReader(s);
 		try{
 			parse(in, contentHandler, isResume);
@@ -308,7 +310,7 @@ public class JSONParser {
 		}
 	}
 	
-	public void parse(Reader in, ContentHandler contentHandler) throws IOException, ParseException{
+	public void parse(@Nullable Reader in, ContentHandler contentHandler) throws IOException, ParseException{
 		parse(in, contentHandler, false);
 	}
 	
@@ -326,7 +328,7 @@ public class JSONParser {
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	public void parse(Reader in, ContentHandler contentHandler, boolean isResume) throws IOException, ParseException{
+	public void parse(@Nullable Reader in, ContentHandler contentHandler, boolean isResume) throws IOException, ParseException{
 		if(!isResume){
 			reset(in);
 			handlerStatusStack = new LinkedList();
@@ -390,7 +392,7 @@ public class JSONParser {
 						break;
 					case Yytoken.TYPE_VALUE:
 						if(token.value instanceof String){
-							String key=(String)token.value;
+							@KeyFor("contentHandler") String key=(String)token.value;
 							status=S_PASSED_PAIR_KEY;
 							statusStack.addFirst(new Integer(status));
 							if(!contentHandler.startObjectEntry(key))
