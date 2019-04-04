@@ -2,6 +2,7 @@
 
 package org.json.simple.parser;
 
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 class Yylex {
@@ -465,7 +466,7 @@ int getPosition(){
    * @param   errorCode  the code of the errormessage to display
    */
   private void zzScanError(int errorCode) {
-    String message;
+    @MonotonicNonNull String message;
     try {
       message = ZZ_ERROR_MSG[errorCode];
     }
