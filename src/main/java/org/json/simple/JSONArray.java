@@ -4,6 +4,8 @@
  */
 package org.json.simple;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
+
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -45,7 +47,7 @@ public class JSONArray extends ArrayList implements JSONAware, JSONStreamAware {
      * @param collection
      * @param out
      */
-	public static void writeJSONString(Collection collection, Writer out) throws IOException{
+	public static void writeJSONString(@Nullable Collection collection, Writer out) throws IOException{
 		if(collection == null){
 			out.write("null");
 			return;
@@ -85,7 +87,7 @@ public class JSONArray extends ArrayList implements JSONAware, JSONStreamAware {
 	 * @param collection
 	 * @return JSON text, or "null" if list is null.
 	 */
-	public static String toJSONString(Collection collection){
+	public static @Nullable String toJSONString(@Nullable Collection collection){
 		final StringWriter writer = new StringWriter();
 		
 		try {
@@ -115,7 +117,7 @@ public class JSONArray extends ArrayList implements JSONAware, JSONStreamAware {
 		}
 	}
 	
-	public static String toJSONString(byte[] array){
+	public static @Nullable String toJSONString(byte[] array){
 		final StringWriter writer = new StringWriter();
 		
 		try {
@@ -145,7 +147,7 @@ public class JSONArray extends ArrayList implements JSONAware, JSONStreamAware {
 		}
 	}
 	
-	public static String toJSONString(short[] array){
+	public static @Nullable String toJSONString(short[] array){
 		final StringWriter writer = new StringWriter();
 		
 		try {
@@ -175,7 +177,7 @@ public class JSONArray extends ArrayList implements JSONAware, JSONStreamAware {
 		}
 	}
 	
-	public static String toJSONString(int[] array){
+	public static @Nullable String toJSONString(int[] array){
 		final StringWriter writer = new StringWriter();
 		
 		try {
@@ -205,7 +207,7 @@ public class JSONArray extends ArrayList implements JSONAware, JSONStreamAware {
 		}
 	}
 	
-	public static String toJSONString(long[] array){
+	public static @Nullable String toJSONString(long[] array){
 		final StringWriter writer = new StringWriter();
 		
 		try {
@@ -235,7 +237,7 @@ public class JSONArray extends ArrayList implements JSONAware, JSONStreamAware {
 		}
 	}
 	
-	public static String toJSONString(float[] array){
+	public static @Nullable String toJSONString(float[] array){
 		final StringWriter writer = new StringWriter();
 		
 		try {
@@ -265,7 +267,7 @@ public class JSONArray extends ArrayList implements JSONAware, JSONStreamAware {
 		}
 	}
 	
-	public static String toJSONString(double[] array){
+	public static @Nullable String toJSONString(double[] array){
 		final StringWriter writer = new StringWriter();
 		
 		try {
@@ -295,7 +297,7 @@ public class JSONArray extends ArrayList implements JSONAware, JSONStreamAware {
 		}
 	}
 	
-	public static String toJSONString(boolean[] array){
+	public static @Nullable String toJSONString(boolean[] array){
 		final StringWriter writer = new StringWriter();
 		
 		try {
@@ -325,7 +327,7 @@ public class JSONArray extends ArrayList implements JSONAware, JSONStreamAware {
 		}
 	}
 	
-	public static String toJSONString(char[] array){
+	public static @Nullable String toJSONString(char[] array){
 		final StringWriter writer = new StringWriter();
 		
 		try {
@@ -337,7 +339,7 @@ public class JSONArray extends ArrayList implements JSONAware, JSONStreamAware {
 		}
 	}
 	
-	public static void writeJSONString(Object[] array, Writer out) throws IOException{
+	public static void writeJSONString(@Nullable Object[] array, Writer out) throws IOException{
 		if(array == null){
 			out.write("null");
 		} else if(array.length == 0) {
@@ -355,7 +357,7 @@ public class JSONArray extends ArrayList implements JSONAware, JSONStreamAware {
 		}
 	}
 	
-	public static String toJSONString(Object[] array){
+	public static @Nullable String toJSONString(@Nullable Object[] array){
 		final StringWriter writer = new StringWriter();
 		
 		try {
@@ -367,13 +369,21 @@ public class JSONArray extends ArrayList implements JSONAware, JSONStreamAware {
 		}
 	}
 	
-	public String toJSONString(){
+	public @Nullable String toJSONString(){
 		return toJSONString(this);
 	}
 
 	/**
 	 * Returns a string representation of this array. This is equivalent to
 	 * calling {@link JSONArray#toJSONString()}.
+	 */
+	@SuppressWarnings("")
+	/*
+	Error:(381, 36) java: [return.type.incompatible] incompatible types in return.
+  	type of expression: @Initialized @Nullable String
+  	method return type: @Initialized @NonNull String
+
+  	Nullability should be checked in toJSONString(Collection collection) method.
 	 */
 	public String toString() {
 		return toJSONString();
