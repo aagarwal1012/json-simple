@@ -4,6 +4,8 @@
  */
 package org.json.simple;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -15,23 +17,23 @@ import java.util.StringTokenizer;
  * @author FangYidong<fangyidong@yahoo.com.cn>
  */
 public class ItemList {
-	private String sp=",";
+	private @Nullable String sp=",";
 	List items=new ArrayList();
 	
 	
 	public ItemList(){}
 	
 	
-	public ItemList(String s){
+	public ItemList(@Nullable String s){
 		this.split(s,sp,items);
 	}
 	
-	public ItemList(String s,String sp){
+	public ItemList(@Nullable String s,@Nullable String sp){
 		this.sp=s;
 		this.split(s,sp,items);
 	}
 	
-	public ItemList(String s,String sp,boolean isMultiToken){
+	public ItemList(@Nullable String s, @Nullable String sp, boolean isMultiToken){
 		split(s,sp,items,isMultiToken);
 	}
 	
@@ -43,7 +45,7 @@ public class ItemList {
 		return (String[])this.items.toArray();
 	}
 	
-	public void split(String s,String sp,List append,boolean isMultiToken){
+	public void split(@Nullable String s,@Nullable String sp,List append,boolean isMultiToken){
 		if(s==null || sp==null)
 			return;
 		if(isMultiToken){
@@ -57,7 +59,7 @@ public class ItemList {
 		}
 	}
 	
-	public void split(String s,String sp,List append){
+	public void split(@Nullable String s,@Nullable String sp,List append){
 		if(s==null || sp==null)
 			return;
 		int pos=0;
@@ -73,17 +75,17 @@ public class ItemList {
 		append.add(s.substring(prevPos).trim());
 	}
 	
-	public void setSP(String sp){
+	public void setSP(@Nullable String sp){
 		this.sp=sp;
 	}
 	
-	public void add(int i,String item){
+	public void add(int i,@Nullable String item){
 		if(item==null)
 			return;
 		items.add(i,item.trim());
 	}
 
-	public void add(String item){
+	public void add(@Nullable String item){
 		if(item==null)
 			return;
 		items.add(item.trim());
@@ -93,15 +95,15 @@ public class ItemList {
 		items.addAll(list.items);
 	}
 	
-	public void addAll(String s){
+	public void addAll(@Nullable String s){
 		this.split(s,sp,items);
 	}
 	
-	public void addAll(String s,String sp){
+	public void addAll(@Nullable String s,@Nullable String sp){
 		this.split(s,sp,items);
 	}
 	
-	public void addAll(String s,String sp,boolean isMultiToken){
+	public void addAll(@Nullable String s,@Nullable String sp,boolean isMultiToken){
 		this.split(s,sp,items,isMultiToken);
 	}
 	
@@ -120,8 +122,17 @@ public class ItemList {
 	public String toString(){
 		return toString(sp);
 	}
-	
-	public String toString(String sp){
+
+	@SuppressWarnings("")
+	/*
+	Error:(134, 43) java: [argument.type.incompatible] incompatible types in argument.
+    found   : @Initialized @Nullable String
+    required: @Initialized @NonNull String
+
+    Syntax should be like sb.append("" + sp);
+    Else nullness of String sp should be resolved.
+	 */
+	public String toString(@Nullable String sp){
 		StringBuffer sb=new StringBuffer();
 		
 		for(int i=0;i<items.size();i++){
