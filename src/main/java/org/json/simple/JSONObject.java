@@ -113,7 +113,7 @@ public class JSONObject extends HashMap implements Map, JSONAware, JSONStreamAwa
 		return toJSONString();
 	}
 
-	@SuppressWarnings("")
+	@SuppressWarnings("argument.type.incompatible")
 	/*
 	Error:(134, 49) java: [argument.type.incompatible] incompatible types in argument.
   	found   : @Initialized @Nullable String

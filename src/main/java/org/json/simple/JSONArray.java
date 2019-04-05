@@ -377,7 +377,7 @@ public class JSONArray extends ArrayList implements JSONAware, JSONStreamAware {
 	 * Returns a string representation of this array. This is equivalent to
 	 * calling {@link JSONArray#toJSONString()}.
 	 */
-	@SuppressWarnings("")
+	@SuppressWarnings("return.type.incompatible")
 	/*
 	Error:(381, 36) java: [return.type.incompatible] incompatible types in return.
   	type of expression: @Initialized @Nullable String

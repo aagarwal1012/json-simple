@@ -1,0 +1,24 @@
+Information:java: Errors occurred while compiling module 'json-simple'
+Information:javac 8 was used to compile java sources
+Information:4/5/2019 11:33 PM - Compilation completed with 4 errors and 5 warnings in 7 s 52 ms
+Warning:java: source value 1.5 is obsolete and will be removed in a future release
+Warning:java: target value 1.5 is obsolete and will be removed in a future release
+Warning:java: To suppress warnings about obsolete options, use -Xlint:-options.
+Warning:java: You do not seem to be using the distributed annotated JDK.  To fix the problem, supply javac an argument like:  -Xbootclasspath/p:.../checker/dist/ .  Currently using: jdk8.jar
+Warning:java: -source 1.5 does not support type annotations
+E:\json-simple\src\main\java\org\json\simple\JSONObject.java
+Error:(67, 29) java: [argument.type.incompatible] incompatible types in argument.
+  found   : @Initialized @Nullable String
+  required: @Initialized @NonNull String
+Information:java: Some input files use unchecked or unsafe operations.
+Information:java: Recompile with -Xlint:unchecked for details.
+E:\json-simple\src\main\java\org\json\simple\ItemList.java
+Error:(28, 27) java: [method.invocation.invalid] call to split(java.lang.String,java.lang.String,java.util.List) not allowed on the given receiver.
+  found   : @UnderInitialization(org.json.simple.ItemList.class) @NonNull ItemList
+  required: @Initialized @NonNull ItemList
+Error:(33, 27) java: [method.invocation.invalid] call to split(java.lang.String,java.lang.String,java.util.List) not allowed on the given receiver.
+  found   : @UnderInitialization(org.json.simple.ItemList.class) @NonNull ItemList
+  required: @Initialized @NonNull ItemList
+Error:(37, 22) java: [method.invocation.invalid] call to split(java.lang.String,java.lang.String,java.util.List,boolean) not allowed on the given receiver.
+  found   : @UnderInitialization(org.json.simple.ItemList.class) @NonNull ItemList
+  required: @Initialized @NonNull ItemList

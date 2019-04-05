@@ -118,7 +118,7 @@ public class JSONValue {
      * @param value
      * @param writer
      */
-    @SuppressWarnings("")
+    @SuppressWarnings("argument.type.incompatible")
 	/*
 	Error:(139, 41) java: [argument.type.incompatible] incompatible types in argument.
 	Error:(176, 66) java: [argument.type.incompatible] incompatible types in argument.
