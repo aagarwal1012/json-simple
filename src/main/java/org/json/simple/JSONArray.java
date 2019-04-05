@@ -339,7 +339,7 @@ public class JSONArray extends ArrayList implements JSONAware, JSONStreamAware {
 		}
 	}
 	
-	public static void writeJSONString(@Nullable Object[] array, Writer out) throws IOException{
+	public static void writeJSONString(Object[] array, Writer out) throws IOException{
 		if(array == null){
 			out.write("null");
 		} else if(array.length == 0) {
@@ -357,7 +357,7 @@ public class JSONArray extends ArrayList implements JSONAware, JSONStreamAware {
 		}
 	}
 	
-	public static @Nullable String toJSONString(@Nullable Object[] array){
+	public static @Nullable String toJSONString(Object[] array){
 		final StringWriter writer = new StringWriter();
 		
 		try {

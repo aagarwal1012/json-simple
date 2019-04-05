@@ -118,6 +118,16 @@ public class JSONValue {
      * @param value
      * @param writer
      */
+    @SuppressWarnings("")
+	/*
+	Error:(139, 41) java: [argument.type.incompatible] incompatible types in argument.
+	Error:(176, 66) java: [argument.type.incompatible] incompatible types in argument.
+  	found   : @Initialized @Nullable String
+  	required: @Initialized @NonNull String
+
+  	String nullness should be checked.
+	Correct syntax could be out.write("" + escape((String)value));
+	 */
 	public static void writeJSONString(@Nullable Object value, Writer out) throws IOException {
 		if(value == null){
 			out.write("null");

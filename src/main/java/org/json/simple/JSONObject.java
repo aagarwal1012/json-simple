@@ -100,11 +100,28 @@ public class JSONObject extends HashMap implements Map, JSONAware, JSONStreamAwa
 	public @Nullable String toJSONString(){
 		return toJSONString(this);
 	}
-	
-	public @Nullable String toString(){
+
+	@SuppressWarnings("return.type.incompatible")
+	/*
+	Error:(113, 36) java: [return.type.incompatible] incompatible types in return.
+  	type of expression: @Initialized @Nullable String
+  	method return type: @Initialized @NonNull String
+
+  	Return nullness should be checked.
+	 */
+	public String toString(){
 		return toJSONString();
 	}
 
+	@SuppressWarnings("")
+	/*
+	Error:(134, 49) java: [argument.type.incompatible] incompatible types in argument.
+  	found   : @Initialized @Nullable String
+  	required: @Initialized @NonNull String
+
+  	Nullness should be checked.
+  	Correct syntax could be sb.append("" + JSONValue.toJSONString(value));
+	 */
 	public static @Nullable String toString(@Nullable String key,@Nullable Object value){
         StringBuffer sb = new StringBuffer();
         sb.append('\"');

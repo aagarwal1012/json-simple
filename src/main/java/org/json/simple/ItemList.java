@@ -123,7 +123,7 @@ public class ItemList {
 		return toString(sp);
 	}
 
-	@SuppressWarnings("")
+	@SuppressWarnings("argument.type.incompatible")
 	/*
 	Error:(134, 43) java: [argument.type.incompatible] incompatible types in argument.
     found   : @Initialized @Nullable String
