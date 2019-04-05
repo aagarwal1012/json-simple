@@ -26,7 +26,15 @@ public class Yytoken {
 		this.type=type;
 		this.value=value;
 	}
-	
+
+	@SuppressWarnings("argument.type.incompatible")
+	/*
+	Error:(34, 52) java: [argument.type.incompatible] incompatible types in argument.
+  	found   : @Initialized @Nullable Object
+  	required: @Initialized @NonNull Object
+
+  	It should be written as sb.append("VALUE(").append("" + value).append(")");
+	 */
 	public String toString(){
 		StringBuffer sb = new StringBuffer();
 		switch(type){

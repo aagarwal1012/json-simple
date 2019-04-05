@@ -1,5 +1,8 @@
 package org.json.simple.parser;
 
+
+import org.checkerframework.checker.nullness.qual.Nullable;
+
 import java.io.IOException;
 
 /**
@@ -105,6 +108,6 @@ public interface ContentHandler {
 	 * @return false if the handler wants to stop parsing after return.
 	 * @throws ParseException
 	 */
-	boolean primitive(Object value) throws ParseException, IOException;
+	boolean primitive(@Nullable Object value) throws ParseException, IOException;
 		
 }

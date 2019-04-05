@@ -5,6 +5,8 @@ package org.json.simple.parser;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
+import java.io.Reader;
+
 class Yylex {
 
   /** This character denotes the end of file */
@@ -221,7 +223,7 @@ class Yylex {
   }
 
   /** the input device */
-  private java.io.Reader zzReader;
+  private @Nullable Reader zzReader;
 
   /** the current state of the DFA */
   private int zzState;
@@ -281,7 +283,7 @@ int getPosition(){
    *
    * @param   in  the java.io.Reader to read input from.
    */
-  Yylex(java.io.Reader in) {
+  Yylex(@Nullable Reader in) {
     this.zzReader = in;
   }
 
@@ -345,6 +347,11 @@ int getPosition(){
     }
 
     /* finally: fill the buffer with new input */
+    @SuppressWarnings("dereference.of.nullable")
+    /*
+    Error:(350, 19) java: [dereference.of.nullable] dereference of possibly-null reference zzReader
+    Nullness of zzReader should be checked using if else statements.
+     */
     int numRead = zzReader.read(zzBuffer, zzEndRead,
                                             zzBuffer.length-zzEndRead);
 
@@ -390,7 +397,7 @@ int getPosition(){
    *
    * @param reader   the new input stream 
    */
-  public final void yyreset(java.io.Reader reader) {
+  public final void yyreset(@Nullable Reader reader) {
     zzReader = reader;
     zzAtBOL  = true;
     zzAtEOF  = false;
@@ -500,6 +507,15 @@ int getPosition(){
    *
    * @return      the next token
    * @exception   java.io.IOException  if any I/O-Error occurs
+   */
+  @SuppressWarnings("assignment.type.incompatible")
+  /*
+  Error:(583, 18) java: [assignment.type.incompatible] incompatible types in assignment.
+  found   : null
+  required: @Initialized @NonNull StringBuffer
+
+  sb = null; sb = new StringBuffer();
+  [sb] is initialized properly.
    */
   public @Nullable Yytoken yylex() throws java.io.IOException, ParseException {
     int zzInput;

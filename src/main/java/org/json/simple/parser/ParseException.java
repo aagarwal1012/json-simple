@@ -1,5 +1,8 @@
 package org.json.simple.parser;
 
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
+
 /**
  * ParseException explains why and where the error occurs in source JSON text.
  * 
@@ -14,7 +17,7 @@ public class ParseException extends Exception {
 	public static final int ERROR_UNEXPECTED_EXCEPTION = 2;
 
 	private int errorType;
-	private Object unexpectedObject;
+	private @Nullable Object unexpectedObject;
 	private int position;
 	
 	public ParseException(int errorType){
@@ -25,7 +28,7 @@ public class ParseException extends Exception {
 		this(-1, errorType, unexpectedObject);
 	}
 	
-	public ParseException(int position, int errorType, Object unexpectedObject){
+	public ParseException(int position, int errorType, @Nullable Object unexpectedObject){
 		this.position = position;
 		this.errorType = errorType;
 		this.unexpectedObject = unexpectedObject;
@@ -60,14 +63,22 @@ public class ParseException extends Exception {
 	 * 			ERROR_UNEXPECTED_TOKEN		org.json.simple.parser.Yytoken
 	 * 			ERROR_UNEXPECTED_EXCEPTION	java.lang.Exception
 	 */
-	public Object getUnexpectedObject() {
+	public @Nullable Object getUnexpectedObject() {
 		return unexpectedObject;
 	}
 	
 	public void setUnexpectedObject(Object unexpectedObject) {
 		this.unexpectedObject = unexpectedObject;
 	}
-	
+
+	@SuppressWarnings("argument.type.incompatible")
+	/*
+	Error:(79, 68) java: [argument.type.incompatible] incompatible types in argument.
+  	found   : @Initialized @Nullable Object
+  	required: @Initialized @NonNull Object
+
+  	It should be written as sb.append("Unexpected character (").append("" + unexpectedObject).append(") at position ").append(position).append(".");
+	 */
 	public String getMessage() {
 		StringBuffer sb = new StringBuffer();
 		

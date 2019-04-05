@@ -61,7 +61,7 @@ public class JSONParser {
      * @throws IOException
      * @throws ParseException
      */
-	public void reset(Reader in){
+	public void reset(@Nullable Reader in){
 		lexer.yyreset(in);
 		reset();
 	}
@@ -77,7 +77,7 @@ public class JSONParser {
 		return parse(s, (ContainerFactory)null);
 	}
 	
-	public Object parse(String s, ContainerFactory containerFactory) throws ParseException{
+	public Object parse(String s, @Nullable ContainerFactory containerFactory) throws ParseException{
 		StringReader in=new StringReader(s);
 		try{
 			return parse(in, containerFactory);
@@ -110,7 +110,12 @@ public class JSONParser {
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	public Object parse(Reader in, ContainerFactory containerFactory) throws IOException, ParseException{
+	@SuppressWarnings("dereference.of.nullable")
+	/*
+	Error:(123, 48) java: [dereference.of.nullable] dereference of possibly-null reference token
+	Nullness of the token should be checked using if else statements.
+	 */
+	public Object parse(Reader in, @Nullable ContainerFactory containerFactory) throws IOException, ParseException{
 		reset(in);
 		LinkedList statusStack = new LinkedList();
 		LinkedList valueStack = new LinkedList();
@@ -153,7 +158,7 @@ public class JSONParser {
 						break;
 					case Yytoken.TYPE_VALUE:
 						if(token.value instanceof String){
-							@KeyFor("valueStack") String key=(String)token.value;
+							String key=(String)token.value;
 							valueStack.addFirst(key);
 							status=S_PASSED_PAIR_KEY;
 							statusStack.addFirst(new Integer(status));
@@ -184,7 +189,7 @@ public class JSONParser {
 						break;
 					case Yytoken.TYPE_VALUE:
 						statusStack.removeFirst();
-						@KeyFor("parent") String key=(String)valueStack.removeFirst();
+						String key=(String)valueStack.removeFirst();
 						Map parent=(Map)valueStack.getFirst();
 						parent.put(key,token.value);
 						status=peekStatus(statusStack);
@@ -296,7 +301,15 @@ public class JSONParser {
 	public void parse(@Nullable String s, ContentHandler contentHandler) throws ParseException{
 		parse(s, contentHandler, false);
 	}
-	
+
+	@SuppressWarnings("argument.type.incompatible")
+	/*
+	Error:(301, 50) java: [argument.type.incompatible] incompatible types in argument.
+  	found   : @Initialized @Nullable String
+  	required: @Initialized @NonNull String
+
+  	String s nullness should be checked using if else statements.
+	 */
 	public void parse(@Nullable String s, ContentHandler contentHandler, boolean isResume) throws ParseException{
 		StringReader in=new StringReader(s);
 		try{
@@ -327,6 +340,11 @@ public class JSONParser {
 	 * 
 	 * @throws IOException
 	 * @throws ParseException
+	 */
+	@SuppressWarnings("dereference.of.nullable")
+	/*
+	Error:(352, 48) java: [dereference.of.nullable] dereference of possibly-null reference token
+	Nullness of the token should be checked using if else statements.
 	 */
 	public void parse(@Nullable Reader in, ContentHandler contentHandler, boolean isResume) throws IOException, ParseException{
 		if(!isResume){
@@ -392,7 +410,7 @@ public class JSONParser {
 						break;
 					case Yytoken.TYPE_VALUE:
 						if(token.value instanceof String){
-							@KeyFor("contentHandler") String key=(String)token.value;
+							String key=(String)token.value;
 							status=S_PASSED_PAIR_KEY;
 							statusStack.addFirst(new Integer(status));
 							if(!contentHandler.startObjectEntry(key))
