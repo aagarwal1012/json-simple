@@ -13,6 +13,7 @@ import java.util.Collection;
 // import java.util.List;
 import java.util.Map;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
@@ -41,7 +42,7 @@ public class JSONValue {
 	 * {@code null}; please use {@link JSONValue#parseWithException(Reader)}
 	 * instead
 	 */
-	public static Object parse(Reader in){
+	public static @Nullable Object parse(Reader in){
 		try{
 			JSONParser parser=new JSONParser();
 			return parser.parse(in);
@@ -71,7 +72,7 @@ public class JSONValue {
 	 * {@code null}; please use {@link JSONValue#parseWithException(String)}
 	 * instead
 	 */
-	public static Object parse(String s){
+	public static @Nullable Object parse(String s){
 		StringReader in=new StringReader(s);
 		return parse(in);
 	}
@@ -93,12 +94,12 @@ public class JSONValue {
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	public static Object parseWithException(Reader in) throws IOException, ParseException{
+	public static @Nullable Object parseWithException(Reader in) throws IOException, ParseException{
 		JSONParser parser=new JSONParser();
 		return parser.parse(in);
 	}
 	
-	public static Object parseWithException(String s) throws ParseException{
+	public static @Nullable Object parseWithException(String s) throws ParseException{
 		JSONParser parser=new JSONParser();
 		return parser.parse(s);
 	}
@@ -117,7 +118,7 @@ public class JSONValue {
      * @param value
      * @param writer
      */
-	public static void writeJSONString(Object value, Writer out) throws IOException {
+	public static void writeJSONString(@Nullable Object value, Writer out) throws IOException {
 		if(value == null){
 			out.write("null");
 			return;
@@ -238,7 +239,7 @@ public class JSONValue {
 	 * @param value
 	 * @return JSON text, or "null" if value is null or it's an NaN or an INF number.
 	 */
-	public static String toJSONString(Object value){
+	public static @Nullable String toJSONString(@Nullable Object value){
 		final StringWriter writer = new StringWriter();
 		
 		try{
@@ -255,7 +256,7 @@ public class JSONValue {
 	 * @param s
 	 * @return
 	 */
-	public static String escape(String s){
+	public static @Nullable String escape(@Nullable String s){
 		if(s==null)
 			return null;
         StringBuffer sb = new StringBuffer();

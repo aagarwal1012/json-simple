@@ -4,6 +4,8 @@
  */
 package org.json.simple;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
+
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -45,7 +47,7 @@ public class JSONObject extends HashMap implements Map, JSONAware, JSONStreamAwa
      * @param map
      * @param out
      */
-	public static void writeJSONString(Map map, Writer out) throws IOException {
+	public static void writeJSONString(@Nullable Map map, Writer out) throws IOException {
 		if(map == null){
 			out.write("null");
 			return;
@@ -83,7 +85,7 @@ public class JSONObject extends HashMap implements Map, JSONAware, JSONStreamAwa
 	 * @param map
 	 * @return JSON text, or "null" if map is null.
 	 */
-	public static String toJSONString(Map map){
+	public static @Nullable String toJSONString(@Nullable Map map){
 		final StringWriter writer = new StringWriter();
 		
 		try {
@@ -95,15 +97,15 @@ public class JSONObject extends HashMap implements Map, JSONAware, JSONStreamAwa
 		}
 	}
 	
-	public String toJSONString(){
+	public @Nullable String toJSONString(){
 		return toJSONString(this);
 	}
 	
-	public String toString(){
+	public @Nullable String toString(){
 		return toJSONString();
 	}
 
-	public static String toString(String key,Object value){
+	public static @Nullable String toString(@Nullable String key,@Nullable Object value){
         StringBuffer sb = new StringBuffer();
         sb.append('\"');
         if(key == null)
@@ -126,7 +128,7 @@ public class JSONObject extends HashMap implements Map, JSONAware, JSONStreamAwa
 	 * @param s
 	 * @return
 	 */
-	public static String escape(String s){
+	public static @Nullable String escape(@Nullable String s){
 		return JSONValue.escape(s);
 	}
 }
